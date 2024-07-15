@@ -10,6 +10,7 @@ export default function MainPage() {
   const [amountInSourceCurrency , setAmountInSourceCurrency] = useState(0);
   const [amountInTargetCurrency , setAmountInTargetCurrency] = useState(0);
   const [currencyNames , setcurrencyNames] = useState([]);
+  const [loading , setLoading] = useState(true);
 
   //handle submit mwthod
 const handleSubmit = async(e) => {
@@ -24,8 +25,14 @@ const handleSubmit = async(e) => {
           targetCurrency,
           amountInSourceCurrency,
         },
+
+        
       } ); 
 
+      setAmountInTargetCurrency(responce.data);
+      setLoading(false);
+
+      console.log(amountInSourceCurrency,  amountInTargetCurrency);
       
 
     }
@@ -113,7 +120,20 @@ useEffect(() => {
           </button> 
           </form>
         </section>
+
+        {!loading ?  <section className="mt-5 lg:mx-32 text-2xl">
+            {amountInSourceCurrency} {currencyNames[sourceCurrency]} is equal to {" "} 
+
+            <span className="text-green-500 font-bold">
+            {amountInTargetCurrency} 
+            </span> {" "} 
+            in {currencyNames[targetCurrency]}
+         </section> : (" ")}
+        
+
+      
       </div>
+      
     </div>
   )
 }
